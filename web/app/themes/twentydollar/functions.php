@@ -405,30 +405,3 @@ function my_theme_register_required_plugins() {
 	tgmpa( $plugins, $config );
 
 }
-
-
-// //Adding the Open Graph in the Language Attributes
-// function add_opengraph_doctype( $output ) {
-// 		return $output . ' xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"';
-// 	}
-// add_filter('language_attributes', 'add_opengraph_doctype');
-//
-// //Lets add Open Graph Meta Info
-//
-// function insert_fb_in_head() {
-// 	global $post;
-// 	if ( !is_singular() ): //if it is not a post or a page
-//     echo '<meta property="og:type" content="article"/>';
-//     echo '<meta property="og:url" content="' . get_permalink() . '"/>';
-//     //echo '<meta property="og:site_name" content="' . bloginfo( 'name' ) .'"/>';
-// 	else:
-// 		// edited to surface HTTP link for legacy fb comments
-// 		echo '<meta property="og:title" content="' . get_the_title() . '"/>';
-// 		echo '<meta property="og:type" content="article"/>';
-// 		echo '<meta property="og:url" content="' . str_replace('https://', 'http://', get_permalink()) . '"/>';
-// 		echo '<meta property="og:site_name" content="' . bloginfo( 'name' ) .'"/>';
-// 		echo '<meta property="og:image" content="' . get_the_post_thumbnail('full-thumb') . '"/>';
-// 	endif;
-//
-// }
-// add_action( 'wp_head', 'insert_fb_in_head', 5 );
