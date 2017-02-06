@@ -11,8 +11,6 @@
 
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 
-z
-
 
 	<?php if(get_theme_mod('sp_favicon')) : ?>
 	<link rel="shortcut icon" href="<?php echo get_theme_mod('sp_favicon'); ?>" />

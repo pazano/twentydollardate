@@ -13,29 +13,29 @@ add_action( 'after_setup_theme', 'solopine_theme_setup' );
 if ( !function_exists('solopine_theme_setup') ) {
 
 	function solopine_theme_setup() {
-	
+
 		// Register navigation menu
 		register_nav_menus(
 			array(
 				'main-menu' => 'Primary Menu',
 			)
 		);
-		
+
 		// Localization support
 		load_theme_textdomain('solopine', get_template_directory() . '/lang');
-		
+
 		// Post formats
 		add_theme_support( 'post-formats', array( 'gallery', 'video', 'audio' ) );
-		
+
 		// Featured image
 		add_theme_support( 'post-thumbnails' );
 		add_image_size( 'full-thumb', 1080, 0, true );
 		add_image_size( 'square-hero', 700, 540, true);
 		add_image_size( 'misc-thumb', 520, 400, true );
-		
+
 		// Feed Links
 		add_theme_support( 'automatic-feed-links' );
-	
+
 	}
 
 }
@@ -56,7 +56,7 @@ function solopine_load_scripts() {
 	wp_register_script('slicknav', get_template_directory_uri() . '/js/jquery.slicknav.min.js', 'jquery', '', true);
 	wp_register_script('fitvids', get_template_directory_uri() . '/js/fitvids.js', 'jquery', '', true);
 	wp_register_script('sp_scripts', get_template_directory_uri() . '/js/solopine.js', 'jquery', '', true);
-	
+
 	// Enqueue scripts and styles
 	wp_enqueue_style('sp_style');
 	wp_enqueue_style('slicknav-css');
@@ -66,16 +66,16 @@ function solopine_load_scripts() {
 	// Fonts
 	// wp_enqueue_style('default_body_font', 'http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin,latin-ext');
 	// wp_enqueue_style('default_heading_font', 'http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic,700italic&subset=latin,latin-ext');
-	
+
 	// JS
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('slicknav');
 	wp_enqueue_script('fitvids');
 	wp_enqueue_script('sp_scripts');
 
-	
+
 	if (is_singular() && get_option('thread_comments'))	wp_enqueue_script('comment-reply');
-	
+
 }
 
 
@@ -126,16 +126,16 @@ if ( function_exists('register_sidebar') ) {
 
 	function solopine_comments($comment, $args, $depth) {
 		$GLOBALS['comment'] = $comment;
-		
+
 		?>
 		<li <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
-			
+
 			<div class="thecomment">
-						
+
 				<div class="author-img">
 					<?php echo get_avatar($comment,$args['avatar_size']); ?>
 				</div>
-				
+
 				<div class="comment-text">
 					<span class="reply">
 						<?php comment_reply_link(array_merge( $args, array('reply_text' => __('Reply', 'solopine'), 'depth' => $depth, 'max_depth' => $args['max_depth'])), $comment->comment_ID); ?>
@@ -149,33 +149,33 @@ if ( function_exists('register_sidebar') ) {
 					<?php endif; ?>
 					<?php comment_text(); ?>
 				</div>
-						
+
 			</div>
-			
-			
+
+
 		</li>
 
-		<?php 
+		<?php
 	}
 
 //////////////////////////////////////////////////////////////////
 // PAGINATION
 //////////////////////////////////////////////////////////////////
 function solopine_pagination() {
-	
+
 	?>
-	
+
 	<div class="pagination">
 
 		<div class="older"><?php next_posts_link(__( 'Older Posts <i class="fa fa-angle-double-right"></i>', 'solopine')); ?></div>
 		<div class="newer"><?php previous_posts_link(__( '<i class="fa fa-angle-double-left"></i> Newer Posts', 'solopine')); ?></div>
-		
+
 	</div>
-					
+
 	<?php
-	
+
 }
-	
+
 //////////////////////////////////////////////////////////////////
 // AUTHOR SOCIAL LINKS
 //////////////////////////////////////////////////////////////////
@@ -206,11 +206,11 @@ add_filter( 'the_content_more_link', 'remove_more_link_scroll' );
 //////////////////////////////////////////////////////////////////
 
 function sp_category($separator) {
-	
+
 	if(get_theme_mod( 'sp_featured_cat_hide' ) == true) {
-		
+
 		$excluded_cat = get_theme_mod('sp_featured_cat');
-		
+
 		$first_time = 1;
 		foreach((get_the_category()) as $category) {
 			if ($category->cat_ID != $excluded_cat) {
@@ -222,9 +222,9 @@ function sp_category($separator) {
 				}
 			}
 		}
-	
+
 	} else {
-		
+
 		$first_time = 1;
 		foreach((get_the_category()) as $category) {
 			if ($first_time == 1) {
@@ -234,7 +234,7 @@ function sp_category($separator) {
 				echo $separator . '<a href="' . get_category_link( $category->term_id ) . '" title="' . sprintf( __( "View all posts in %s", "solopine" ), $category->name ) . '" ' . '>' . $category->name.'</a>';
 			}
 		}
-	
+
 	}
 }
 
@@ -278,11 +278,11 @@ add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 function sp_string_limit_words($string, $word_limit)
 {
 	$words = explode(' ', $string, ($word_limit + 1));
-	
+
 	if(count($words) > $word_limit) {
 		array_pop($words);
 	}
-	
+
 	return implode(' ', $words);
 }
 
@@ -405,3 +405,30 @@ function my_theme_register_required_plugins() {
 	tgmpa( $plugins, $config );
 
 }
+
+
+// //Adding the Open Graph in the Language Attributes
+// function add_opengraph_doctype( $output ) {
+// 		return $output . ' xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"';
+// 	}
+// add_filter('language_attributes', 'add_opengraph_doctype');
+//
+// //Lets add Open Graph Meta Info
+//
+// function insert_fb_in_head() {
+// 	global $post;
+// 	if ( !is_singular() ): //if it is not a post or a page
+//     echo '<meta property="og:type" content="article"/>';
+//     echo '<meta property="og:url" content="' . get_permalink() . '"/>';
+//     //echo '<meta property="og:site_name" content="' . bloginfo( 'name' ) .'"/>';
+// 	else:
+// 		// edited to surface HTTP link for legacy fb comments
+// 		echo '<meta property="og:title" content="' . get_the_title() . '"/>';
+// 		echo '<meta property="og:type" content="article"/>';
+// 		echo '<meta property="og:url" content="' . str_replace('https://', 'http://', get_permalink()) . '"/>';
+// 		echo '<meta property="og:site_name" content="' . bloginfo( 'name' ) .'"/>';
+// 		echo '<meta property="og:image" content="' . get_the_post_thumbnail('full-thumb') . '"/>';
+// 	endif;
+//
+// }
+// add_action( 'wp_head', 'insert_fb_in_head', 5 );
