@@ -131,7 +131,7 @@ function swp_open_graph_values($info){
 	 * Open Graph Tags (The Easy Ones That Don't Need Conditional Fallbacks)
 	 *
 	 */
-	$info['meta_tag_values']['og_url']                 = get_permalink();
+	$info['meta_tag_values']['og_url']                 = str_replace('https://', 'http://', get_permalink());
 	$info['meta_tag_values']['og_site_name']           = get_bloginfo( 'name' );
 	$info['meta_tag_values']['article_published_time'] = get_post_time( 'c' );
 	$info['meta_tag_values']['article_modified_time']  = get_post_modified_time( 'c' );
